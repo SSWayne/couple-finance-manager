@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+*.log
+# 個人財務資料：備份與匯出檔一律不進版控
+couple-finance-backup-*.json
+*.backup.json
+*.csv
+test-output/
+.DS_Store
+Thumbs.db
