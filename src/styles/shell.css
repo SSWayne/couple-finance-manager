@@ -1,0 +1,423 @@
+/* ==========================================================================
+   App 外框（依參考圖：浮動大圓角白色容器、白色 Sidebar、淺灰內容區、白色無框卡片）
+   ========================================================================== */
+
+/* ---------- 外框 ---------- */
+.cf-app-frame {
+  min-height: 100vh;
+  padding: 32px;
+}
+.cf-app-window {
+  display: grid;
+  grid-template-columns: var(--cf-sidebar-width) minmax(0, 1fr);
+  min-height: calc(100vh - 64px);
+  max-width: 1560px;
+  margin: 0 auto;
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-window);
+  box-shadow: var(--cf-shadow-window);
+  padding: 10px 10px 10px 0;
+  transition: grid-template-columns 0.2s ease;
+}
+.cf-app-window > * { min-width: 0; }
+.cf-app-window-collapsed { grid-template-columns: 84px minmax(0, 1fr); }
+
+.cf-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 100;
+  background: var(--cf-black);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: var(--cf-radius-sm);
+}
+.cf-skip-link:focus { left: 8px; }
+
+/* ---------- Sidebar ---------- */
+.cf-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 16px 8px 18px;
+  position: sticky;
+  top: 42px;
+  align-self: start;
+  height: calc(100vh - 84px);
+  min-height: 560px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+.cf-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px 18px;
+  min-height: 34px;
+}
+.cf-sidebar-wordmark {
+  flex: 1;
+  min-width: 0;
+  color: var(--cf-text);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.cf-sidebar-wordmark:hover { color: var(--cf-text); }
+.cf-sidebar-wordmark-accent {
+  background-image: linear-gradient(transparent 62%, var(--cf-lime) 62%, var(--cf-lime) 92%, transparent 92%);
+  padding: 0 1px;
+}
+.cf-sidebar-wordmark-short {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--cf-lime);
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.cf-icon-btn.cf-sidebar-close { display: none; }
+
+.cf-sidebar-nav { display: flex; flex-direction: column; }
+.cf-sidebar-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.cf-sidebar-divider { border: 0; border-top: 1px solid var(--cf-line); margin: 14px 12px; opacity: 1; }
+.cf-sidebar-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  color: var(--cf-text);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.cf-sidebar-link .bi { font-size: 1.08rem; flex: none; width: 20px; text-align: center; }
+.cf-sidebar-link:hover { background: var(--cf-content-bg); color: var(--cf-text); }
+.cf-sidebar-link:focus-visible { outline: 2px solid var(--cf-lime); outline-offset: 1px; }
+.cf-sidebar-link-active { background: var(--cf-bar-gray); font-weight: 500; }
+.cf-sidebar-link-active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 9px;
+  bottom: 9px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--cf-black);
+}
+
+/* 備份提示卡（對應參考圖左下「Upgrade to Pro」卡片的位置與樣式） */
+.cf-sidebar-backup { margin-top: auto; padding-top: 18px; }
+.cf-backup-card {
+  border: 1px solid var(--cf-line);
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--cf-card-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cf-backup-card p { margin: 0; }
+.cf-backup-card-icon {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--cf-black); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+.cf-backup-card-icon-warning { background: var(--cf-warning); color: var(--cf-black); }
+.cf-backup-card-title { font-size: 1.15rem; font-weight: 500; letter-spacing: 0.01em; }
+.cf-backup-card-text { font-size: 0.82rem; color: var(--cf-text); }
+.cf-backup-card-note { font-size: 0.78rem; color: var(--cf-text-muted); }
+.cf-backup-card-btn {
+  margin-top: 12px;
+  height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--cf-black);
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.cf-backup-card-btn:hover { background: #000; }
+.cf-backup-card-btn:focus-visible { outline: 2px solid var(--cf-lime); outline-offset: 2px; }
+.cf-backup-mini {
+  display: none;
+  width: 44px; height: 44px; margin: 0 auto;
+  border-radius: 12px; border: 1px solid var(--cf-line);
+  background: var(--cf-card-bg); color: var(--cf-text);
+  align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.cf-backup-mini-warning { border-color: var(--cf-warning); background: var(--cf-warning-soft); }
+
+.cf-sidebar-collapse {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--cf-text);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.cf-sidebar-collapse .bi { width: 20px; text-align: center; font-size: 0.85rem; }
+.cf-sidebar-collapse:hover { background: var(--cf-content-bg); }
+
+/* 收合狀態：只顯示圖示 */
+.cf-app-window-collapsed .cf-sidebar { padding-left: 14px; padding-right: 14px; }
+.cf-app-window-collapsed .cf-sidebar-label,
+.cf-app-window-collapsed .cf-sidebar-wordmark-full,
+.cf-app-window-collapsed .cf-backup-card { display: none; }
+.cf-app-window-collapsed .cf-sidebar-wordmark-short,
+.cf-app-window-collapsed .cf-backup-mini { display: inline-flex; }
+.cf-app-window-collapsed .cf-sidebar-brand { padding: 0 6px 22px; }
+.cf-app-window-collapsed .cf-sidebar-link,
+.cf-app-window-collapsed .cf-sidebar-collapse { justify-content: center; padding: 0; }
+.cf-app-window-collapsed .cf-sidebar-link-active::before { left: -6px; }
+.cf-app-window-collapsed .cf-sidebar-divider { margin: 18px 4px; }
+
+/* ---------- 主區 ---------- */
+.cf-main {
+  background: var(--cf-content-bg);
+  border-radius: 22px;
+  padding: 16px 18px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.cf-content { min-width: 0; outline: none; }
+
+/* ---------- 頂部列 ---------- */
+.cf-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.cf-icon-btn.cf-topbar-menu { display: none; }
+.cf-topbar-search {
+  flex: 0 1 300px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cf-card-bg);
+  border-radius: 12px;
+  padding: 0 14px;
+  height: 40px;
+  color: var(--cf-text);
+  margin: 0;
+  font-size: 0.85rem;
+}
+.cf-topbar-search:focus-within { box-shadow: 0 0 0 3px var(--bs-focus-ring-color); }
+.cf-topbar-search-input {
+  border: 0;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--cf-text);
+}
+.cf-topbar-search-input::placeholder { color: var(--cf-text-muted); }
+.cf-topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; min-width: 0; }
+
+.cf-topbar-iconbox {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--cf-card-bg);
+  color: var(--cf-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+  flex: none;
+}
+.cf-topbar-iconbox:hover { color: var(--cf-text); background: #fbfbfa; box-shadow: inset 0 0 0 1px var(--cf-line); }
+.cf-topbar-iconbox:focus-visible { outline: 2px solid var(--cf-lime); }
+.cf-topbar-iconbox-dot {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cf-warning);
+  box-shadow: 0 0 0 2px var(--cf-card-bg);
+}
+
+.cf-topbar-members {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 14px 0 6px;
+  border-radius: 12px;
+  background: var(--cf-card-bg);
+  color: var(--cf-text);
+  text-decoration: none;
+  min-width: 0;
+}
+.cf-topbar-members:hover { color: var(--cf-text); box-shadow: inset 0 0 0 1px var(--cf-line); }
+.cf-topbar-members-avatars { display: inline-flex; flex: none; }
+.cf-topbar-members-avatars .cf-avatar { width: 28px; height: 28px; font-size: 0.75rem; border: 2px solid var(--cf-card-bg); }
+.cf-topbar-members-avatars .cf-avatar + .cf-avatar { margin-left: -8px; }
+.cf-topbar-members-text { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.cf-topbar-members-name { font-size: 0.8rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.cf-topbar-members-sub { font-size: 0.7rem; color: var(--cf-text-muted); white-space: nowrap; }
+
+.cf-topbar-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px 0 10px;
+  border-radius: 12px;
+  background: var(--cf-card-bg);
+  color: var(--cf-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex: none;
+}
+.cf-topbar-add:hover { color: var(--cf-text); box-shadow: inset 0 0 0 1px var(--cf-line); }
+.cf-topbar-add-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1.5px solid var(--cf-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.cf-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--cf-black);
+  text-decoration: none;
+  flex: none;
+}
+.cf-avatar-self { background: var(--cf-lime); }
+.cf-avatar-partner { background: var(--cf-yellow); }
+
+.cf-fab { display: none; }
+.cf-drawer-backdrop { display: none; }
+
+/* ---------- 視窗較矮：Sidebar 不固定，跟著頁面捲動，避免底部備份卡被裁切 ---------- */
+@media (min-width: 992px) and (max-height: 819.98px) {
+  .cf-sidebar { position: static; height: auto; min-height: 0; overflow: visible; }
+}
+
+/* ---------- 中等寬度：頂部列收斂 ---------- */
+@media (max-width: 1279.98px) {
+  .cf-topbar-members-text { display: none; }
+  .cf-topbar-members { padding: 0 6px; }
+}
+
+/* ---------- 手機／平板：Sidebar 變抽屜 ---------- */
+@media (max-width: 991.98px) {
+  .cf-app-frame { padding: 0; }
+  .cf-app-window,
+  .cf-app-window-collapsed {
+    display: block;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    background: var(--cf-content-bg);
+  }
+  .cf-main { border-radius: 0; padding: 12px 16px 96px; gap: 14px; }
+
+  .cf-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 86vw);
+    height: auto;
+    min-height: 0;
+    z-index: 1050;
+    background: var(--cf-card-bg);
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    visibility: hidden;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.15);
+    padding: 18px 16px 16px 18px;
+  }
+  .cf-drawer-open .cf-sidebar { transform: none; visibility: visible; }
+  .cf-icon-btn.cf-sidebar-close { display: inline-flex; }
+  .cf-sidebar-collapse { display: none; }
+  /* 抽屜中一律顯示完整選單（忽略桌機收合狀態） */
+  .cf-app-window-collapsed .cf-sidebar-label,
+  .cf-app-window-collapsed .cf-sidebar-wordmark-full { display: inline; }
+  .cf-app-window-collapsed .cf-backup-card { display: flex; }
+  .cf-app-window-collapsed .cf-sidebar-wordmark-short,
+  .cf-app-window-collapsed .cf-backup-mini { display: none; }
+  .cf-app-window-collapsed .cf-sidebar-link { justify-content: flex-start; padding: 0 14px; }
+
+  .cf-drawer-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    background: rgba(26, 29, 27, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .cf-drawer-open .cf-drawer-backdrop { opacity: 1; pointer-events: auto; }
+
+  .cf-icon-btn.cf-topbar-menu { display: inline-flex; background: var(--cf-card-bg); width: 40px; height: 40px; border-radius: 12px; }
+  .cf-topbar-search { flex: 1 1 auto; }
+  .cf-topbar-add { display: none; }
+
+  .cf-fab {
+    display: inline-flex;
+    position: fixed;
+    right: 18px;
+    bottom: 22px;
+    z-index: 1030;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--cf-lime);
+    color: var(--cf-black);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 12px 26px rgba(105, 150, 30, 0.45);
+    text-decoration: none;
+  }
+  .cf-fab:hover { color: var(--cf-black); background: var(--cf-lime-dark); }
+}
+
+@media (max-width: 575.98px) {
+  .cf-topbar { gap: 8px; }
+  .cf-topbar-members,
+  .cf-topbar-iconbox-settings { display: none; }
+}

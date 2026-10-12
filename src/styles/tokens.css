@@ -1,0 +1,36 @@
+/* 配色與尺寸 token（Modern Minimal Fintech） */
+:root {
+  --cf-frame-bg: #E9EAE7;
+  --cf-content-bg: #F5F6F4;
+  --cf-card-bg: #FFFFFF;
+  --cf-text: #202421;
+  --cf-text-muted: #8A918B;
+  --cf-lime: #A9D94F;
+  --cf-lime-dark: #8DBF35;
+  --cf-lime-soft: #EAF4D8;
+  --cf-yellow: #EDE35C;
+  --cf-orange: #F5B26B;
+  --cf-bar-gray: #ECEDEB;
+  --cf-warning: #F2B45A;
+  --cf-warning-soft: #FDF1DE;
+  --cf-error: #E46B6B;
+  --cf-error-soft: #FBE7E7;
+  --cf-line: #E4E6E2;
+  --cf-black: #1A1D1B;
+
+  --cf-radius-window: 32px;
+  --cf-radius-card: 18px;
+  --cf-radius-md: 14px;
+  --cf-radius-sm: 10px;
+  --cf-sidebar-width: 236px;
+  --cf-shadow-window: 0 30px 60px -30px rgba(32, 36, 33, 0.25);
+
+  --cf-font: 'Inter', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --cf-font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  /* 對齊 Bootstrap 變數 */
+  --bs-body-font-family: var(--cf-font);
+  --bs-body-color: var(--cf-text);
+  --bs-border-color: var(--cf-line);
+  --bs-focus-ring-color: rgba(169, 217, 79, 0.45);
+}

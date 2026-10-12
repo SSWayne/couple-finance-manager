@@ -1,0 +1,139 @@
+/* ==========================================================================
+   第 4 階段：婚禮基金、購屋規劃、通用表格
+   命名：cf-wedding-*、cf-gift-*、cf-housing-*、cf-table*，全域唯一
+   ========================================================================== */
+
+/* ---------- 統計卡片列（婚禮與購屋共用） ---------- */
+.cf-wedding-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.cf-wedding-stat {
+  background: var(--cf-card-bg);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.cf-wedding-stat-icon { width: 30px; height: 30px; border-radius: 9px; background: var(--cf-content-bg); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 6px; font-size: 0.9rem; }
+.cf-wedding-stat-label { font-size: 0.74rem; color: var(--cf-text-muted); }
+.cf-wedding-stat-value { font-size: 1.2rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; line-height: 1.25; }
+.cf-wedding-stat-note { font-size: 0.68rem; color: var(--cf-text-muted); }
+.cf-wedding-stat-main { background: var(--cf-black); color: #fff; }
+.cf-wedding-stat-main .cf-wedding-stat-icon { background: var(--cf-lime); color: var(--cf-black); }
+.cf-wedding-stat-main .cf-wedding-stat-label, .cf-wedding-stat-main .cf-wedding-stat-note { color: rgba(255, 255, 255, 0.65); }
+.cf-wedding-stat-main .cf-wedding-stat-value { color: var(--cf-lime); }
+.cf-wedding-create { align-self: flex-start; }
+
+/* ---------- 婚禮項目 ---------- */
+.cf-wedding-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cf-wedding-item {
+  display: grid;
+  /* 操作欄固定寬度，各列數字欄才會對齊（有無「查看交易」按鈕都一樣） */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.5fr) 236px;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cf-bar-gray);
+}
+.cf-wedding-item:last-child { border-bottom: 0; }
+.cf-wedding-item-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.cf-wedding-item-name { background: transparent; border: 0; padding: 0; text-align: left; font-weight: 500; color: var(--cf-text); font-size: 0.92rem; }
+.cf-wedding-item-name:hover { text-decoration: underline; }
+.cf-wedding-item-bar { height: 8px; border-radius: 5px; margin-top: 2px; }
+.cf-wedding-item-bar .cf-progress-fill { border-radius: 5px; background-image: none; min-width: 0; }
+.cf-wedding-item-nums { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cf-wedding-item-nums > div { min-width: 0; }
+.cf-wedding-item-nums dt { font-size: 0.7rem; font-weight: 400; color: var(--cf-text-muted); }
+.cf-wedding-item-nums dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 0.9rem; overflow-wrap: anywhere; }
+.cf-wedding-item-split { display: block; font-size: 0.66rem; color: var(--cf-text-muted); font-weight: 400; }
+.cf-wedding-item-overpaid { color: #9a5f0c; }
+.cf-wedding-item-actions { display: flex; align-items: center; justify-content: flex-end; gap: 2px; }
+.cf-wedding-item-actions .btn { padding: 5px 10px; font-size: 0.78rem; white-space: nowrap; margin-right: 4px; }
+
+/* ---------- 禮金 ---------- */
+.cf-gift-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cf-gift-item {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cf-bar-gray);
+}
+.cf-gift-item:last-child { border-bottom: 0; }
+.cf-gift-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--cf-warning-soft); display: inline-flex; align-items: center; justify-content: center; color: #9a5f0c; }
+.cf-gift-main { min-width: 0; display: flex; flex-direction: column; background: transparent; border: 0; padding: 0; text-align: left; color: var(--cf-text); }
+.cf-gift-name { font-weight: 500; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-gift-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- 購屋規劃 ---------- */
+.cf-housing-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; min-width: 0; scrollbar-width: thin; }
+.cf-housing-tab {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--cf-line);
+  background: var(--cf-card-bg);
+  color: var(--cf-text);
+  max-width: 260px;
+}
+.cf-housing-tab-active { border-color: var(--cf-black); box-shadow: inset 0 0 0 1px var(--cf-black); }
+.cf-housing-tab-name { font-weight: 500; font-size: 0.9rem; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-housing-tab-meta { font-size: 0.72rem; color: var(--cf-text-muted); white-space: nowrap; }
+.cf-housing-detail { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.cf-housing-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cf-housing-title { font-size: 1.1rem; font-weight: 500; margin: 0 auto 0 0; min-width: 0; overflow-wrap: anywhere; }
+.cf-housing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.cf-housing-grid > * { min-width: 0; }
+.cf-housing-pay { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.cf-housing-pay > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--cf-bar-gray); }
+.cf-housing-pay > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.cf-housing-pay dt { font-size: 0.82rem; font-weight: 400; color: var(--cf-text-muted); min-width: 0; }
+.cf-housing-pay dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cf-housing-pay-main dd { font-size: 1.6rem; color: var(--cf-text); }
+.cf-housing-ratio { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cf-housing-ratio-value { font-size: 2rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cf-housing-ratio-over { color: #9a5f0c; }
+.cf-housing-year { width: auto; max-width: 100%; font-size: 0.82rem; padding: 6px 32px 6px 10px; }
+.cf-housing-subtitle { font-size: 0.9rem; font-weight: 500; margin: 6px 0 0; }
+.cf-housing-preview { margin-top: 4px; }
+
+/* ---------- 通用表格（可橫向捲動，不撐寬頁面） ---------- */
+.cf-table-wrap { position: relative; overflow-x: auto; min-width: 0; max-width: 100%; border-radius: 12px; border: 1px solid var(--cf-bar-gray); }
+/* position: relative：讓表格內的絕對定位元素（例如給螢幕報讀器的隱藏文字）以捲動框為基準，不會跑出去撐寬頁面 */
+.cf-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.cf-table th { text-align: right; font-weight: 500; color: var(--cf-text-muted); background: var(--cf-content-bg); padding: 8px 12px; white-space: nowrap; font-size: 0.75rem; }
+.cf-table td { text-align: right; padding: 7px 12px; border-top: 1px solid var(--cf-bar-gray); white-space: nowrap; }
+.cf-table th:first-child, .cf-table td:first-child, .cf-table th:nth-child(2), .cf-table td:nth-child(2) { text-align: left; }
+.cf-table tbody tr { cursor: default; }
+.cf-table-row-active td { background: var(--cf-lime-soft); }
+.cf-table-row-muted td { color: var(--cf-text-muted); }
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 1399.98px) {
+  .cf-wedding-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1199.98px) {
+  .cf-wedding-item { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+  .cf-wedding-item-actions { grid-column: 1 / -1; justify-content: flex-end; }
+  .cf-housing-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 767.98px) {
+  .cf-wedding-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-wedding-item { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .cf-gift-item { grid-template-columns: 36px minmax(0, 1fr) auto; }
+  .cf-gift-item .cf-pill { grid-column: 2; grid-row: 2; justify-self: start; }
+  .cf-gift-item .cf-icon-btn-danger { grid-column: 3; grid-row: 2; justify-self: end; }
+}
+
+@media (max-width: 575.98px) {
+  .cf-wedding-stat { padding: 12px; }
+  .cf-wedding-stat-value { font-size: 1.05rem; }
+  .cf-housing-pay-main dd { font-size: 1.3rem; }
+}

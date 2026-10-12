@@ -1,0 +1,307 @@
+/* ==========================================================================
+   我們的小金庫 — 全站樣式
+   命名規則：一律 cf-<元件>-<部位>，不重用 Bootstrap 的 class 名稱（card、container、nav…）
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--cf-font);
+  color: var(--cf-text);
+  background: var(--cf-frame-bg);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+h1, h2, h3 { color: var(--cf-text); }
+
+/* ---------- 啟動畫面 ---------- */
+.cf-boot {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--cf-text-muted);
+  padding: 24px;
+  text-align: center;
+}
+.cf-boot-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--cf-bar-gray);
+  border-top-color: var(--cf-lime);
+  animation: cf-spin 0.9s linear infinite;
+}
+.cf-boot-error h1 { font-size: 1.3rem; }
+@keyframes cf-spin { to { transform: rotate(360deg); } }
+
+/* ---------- 按鈕 ---------- */
+.btn { border-radius: 12px; font-weight: 500; padding: 8px 16px; font-size: 0.88rem; }
+.cf-btn-lime { background: var(--cf-lime); color: var(--cf-black); border: 0; }
+.cf-btn-lime:hover, .cf-btn-lime:focus-visible { background: var(--cf-lime-dark); color: var(--cf-black); }
+.cf-btn-dark { background: var(--cf-black); color: #fff; border: 0; }
+.cf-btn-dark:hover, .cf-btn-dark:focus-visible { background: #000; color: #fff; }
+.cf-btn-ghost { background: var(--cf-card-bg); color: var(--cf-text); border: 1px solid var(--cf-line); }
+.cf-btn-ghost:hover, .cf-btn-ghost:focus-visible { background: var(--cf-content-bg); color: var(--cf-text); border-color: var(--cf-line); }
+.cf-btn-danger { background: var(--cf-error); color: #fff; border: 0; }
+.cf-btn-danger:hover, .cf-btn-danger:focus-visible { background: #cf5454; color: #fff; }
+/* Bootstrap 的 .btn:disabled 會改底色，這裡保留各按鈕原色只降低透明度 */
+.btn.cf-btn-lime:disabled { background: var(--cf-lime); color: var(--cf-black); }
+.btn.cf-btn-dark:disabled { background: var(--cf-black); color: #fff; }
+.btn.cf-btn-ghost:disabled { background: var(--cf-card-bg); color: var(--cf-text); border-color: var(--cf-line); }
+.btn.cf-btn-danger:disabled { background: var(--cf-error); color: #fff; }
+.btn:disabled { opacity: 0.45; }
+
+.cf-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cf-radius-sm);
+  border: 0;
+  background: transparent;
+  color: var(--cf-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.cf-icon-btn:hover { background: var(--cf-bar-gray); }
+.cf-icon-btn:focus-visible { outline: 2px solid var(--cf-lime); }
+.cf-icon-btn-danger { color: var(--cf-error); }
+
+.form-control, .form-select { background-color: var(--cf-card-bg); border-radius: var(--cf-radius-sm); border-color: var(--cf-line); padding: 9px 12px; font-size: 0.95rem; }
+.form-control:focus, .form-select:focus { border-color: var(--cf-lime); box-shadow: 0 0 0 3px var(--bs-focus-ring-color); }
+.form-check-input:checked { background-color: var(--cf-lime-dark); border-color: var(--cf-lime-dark); }
+.form-label { font-weight: 500; font-size: 0.82rem; margin-bottom: 6px; }
+
+/* ---------- 頁面 ---------- */
+.cf-page { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.cf-page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.cf-page-head-text { min-width: 0; }
+.cf-page-head-title { font-size: 1.35rem; font-weight: 600; margin: 0; letter-spacing: 0.01em; }
+.cf-page-head-subtitle { margin: 2px 0 0; color: var(--cf-text-muted); font-size: 0.82rem; }
+.cf-page-head-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.cf-panel {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 20px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cf-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.cf-panel-head-text { min-width: 0; }
+.cf-panel-title { font-size: 1rem; font-weight: 500; margin: 0; }
+.cf-panel-subtitle { margin: 1px 0 0; color: var(--cf-text-muted); font-size: 0.76rem; }
+.cf-panel-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cf-panel p { margin: 0; }
+
+.cf-notice {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--cf-radius-md);
+  background: var(--cf-content-bg);
+  font-size: 0.9rem;
+}
+.cf-notice-icon { font-size: 1.05rem; line-height: 1.4; flex: none; }
+.cf-notice-body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.cf-notice-body p { margin: 0; }
+.cf-notice-title { font-weight: 500; }
+.cf-notice-info .cf-notice-icon { color: var(--cf-text-muted); }
+.cf-notice-success { background: var(--cf-lime-soft); }
+.cf-notice-success .cf-notice-icon { color: var(--cf-lime-dark); }
+.cf-notice-warning { background: var(--cf-warning-soft); }
+.cf-notice-warning .cf-notice-icon { color: #c98622; }
+.cf-notice-danger { background: var(--cf-error-soft); }
+.cf-notice-danger .cf-notice-icon { color: var(--cf-error); }
+.cf-notice-btn { align-self: flex-start; margin-top: 6px; }
+
+.cf-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.cf-pill-ok { background: var(--cf-lime-soft); color: #4d7a12; }
+.cf-pill-warning { background: var(--cf-warning-soft); color: #9a5f0c; }
+.cf-pill-danger { background: var(--cf-error-soft); color: #b13b3b; }
+.cf-pill-neutral { background: var(--cf-bar-gray); color: var(--cf-text); }
+.cf-pill-muted { background: var(--cf-content-bg); color: var(--cf-text-muted); }
+
+.cf-kv-list { margin: 0; display: grid; gap: 10px; }
+.cf-kv-list > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+.cf-kv-list dt { font-weight: 400; color: var(--cf-text-muted); font-size: 0.82rem; }
+.cf-kv-list dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.cf-kv-list-compact { gap: 6px; }
+.cf-text-mono { font-family: var(--cf-font-mono); font-size: 0.85em; overflow-wrap: anywhere; }
+.cf-help-text { color: var(--cf-text-muted); font-size: 0.83rem; }
+
+.cf-stat-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.cf-stat-tile {
+  background: var(--cf-content-bg);
+  border-radius: var(--cf-radius-md);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+.cf-stat-tile-icon {
+  grid-row: span 2;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--cf-lime-soft);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cf-stat-tile-value { font-size: 1.4rem; font-weight: 600; line-height: 1.1; }
+.cf-stat-tile-label { color: var(--cf-text-muted); font-size: 0.85rem; }
+
+.cf-placeholder-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cf-placeholder-list li { display: flex; gap: 8px; align-items: baseline; }
+.cf-placeholder-list .bi { color: var(--cf-lime-dark); }
+
+.cf-segmented { display: inline-flex; background: var(--cf-content-bg); border-radius: var(--cf-radius-md); padding: 4px; gap: 4px; }
+.cf-segmented-btn {
+  border: 0;
+  background: transparent;
+  padding: 6px 14px;
+  border-radius: var(--cf-radius-sm);
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--cf-text-muted);
+}
+.cf-segmented-btn-active { background: var(--cf-card-bg); color: var(--cf-text); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06); }
+
+.cf-inline-form { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.cf-inline-form .form-control { flex: 1; min-width: 0; }
+.cf-inline-form .btn { flex: none; }
+
+/* ---------- 設定頁 ---------- */
+.cf-settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+.cf-settings-grid > * { min-width: 0; }
+.cf-settings-backup .btn, .cf-settings-import .btn { align-self: flex-start; }
+.cf-import-summary { display: flex; flex-direction: column; gap: 12px; }
+.cf-import-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cf-import-check { display: flex; gap: 10px; align-items: flex-start; padding-left: 0; }
+.cf-import-check .form-check-input { margin: 3px 0 0; flex: none; float: none; }
+.cf-error-list { margin: 4px 0 0; padding-left: 18px; max-height: 240px; overflow-y: auto; overflow-wrap: anywhere; }
+
+.cf-member-row { display: flex; gap: 14px; align-items: flex-end; }
+.cf-member-row .cf-avatar { border-color: var(--cf-card-bg); margin-bottom: 2px; }
+.cf-member-field { flex: 1; min-width: 0; }
+
+.cf-category-toggle { margin: 0; }
+.cf-category-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 18px; align-items: start; }
+.cf-category-item { min-width: 0; background: var(--cf-content-bg); border-radius: var(--cf-radius-md); padding: 6px; }
+.cf-category-children { list-style: none; margin: 0; padding: 0 0 0 22px; }
+.cf-category-row { display: flex; align-items: center; gap: 10px; padding: 4px 6px; min-width: 0; border-radius: var(--cf-radius-sm); }
+.cf-category-row-child { padding-top: 2px; padding-bottom: 2px; }
+.cf-category-row-archived .cf-category-name { color: var(--cf-text-muted); text-decoration: line-through; }
+.cf-category-swatch {
+  width: 30px; height: 30px; border-radius: 9px; flex: none;
+  background: var(--cf-swatch, var(--cf-lime));
+  display: inline-flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--cf-black);
+}
+.cf-category-row-child .cf-category-swatch { width: 22px; height: 22px; border-radius: 7px; font-size: 0.72rem; opacity: 0.75; }
+.cf-category-name { flex: 1; min-width: 0; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-category-actions { display: inline-flex; gap: 0; flex: none; }
+.cf-category-actions .cf-icon-btn { width: 32px; height: 32px; }
+.cf-category-add { max-width: 480px; }
+
+.cf-info-list { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+
+/* ---------- 對話框 ---------- */
+.cf-dialog {
+  border: 0;
+  border-radius: var(--cf-radius-card);
+  padding: 0;
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  color: var(--cf-text);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+}
+.cf-dialog-lg { width: min(760px, calc(100vw - 32px)); }
+.cf-dialog::backdrop { background: rgba(26, 29, 27, 0.45); }
+.cf-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px 6px; }
+.cf-dialog-title { font-size: 1.1rem; font-weight: 700; margin: 0; }
+.cf-dialog-body { padding: 8px 20px 12px; }
+.cf-dialog-text { margin: 0; }
+.cf-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 20px 18px; flex-wrap: wrap; }
+
+/* ---------- Toast ---------- */
+.cf-toast-region {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1080;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(380px, calc(100vw - 32px));
+  pointer-events: none;
+}
+.cf-toast-item {
+  pointer-events: auto;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--cf-black);
+  color: #fff;
+  border-radius: var(--cf-radius-md);
+  padding: 12px 10px 12px 14px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+  animation: cf-toast-in 0.2s ease-out;
+  font-size: 0.9rem;
+}
+.cf-toast-item-leaving { opacity: 0; transition: opacity 0.2s; }
+.cf-toast-icon { flex: none; font-size: 1.05rem; line-height: 1.35; }
+.cf-toast-item-success .cf-toast-icon { color: var(--cf-lime); }
+.cf-toast-item-warning .cf-toast-icon { color: var(--cf-warning); }
+.cf-toast-item-error { background: #5b2323; }
+.cf-toast-item-error .cf-toast-icon { color: #ff9c9c; }
+.cf-toast-body { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.cf-toast-detail { margin: 6px 0 0; padding-left: 16px; font-size: 0.82rem; opacity: 0.9; }
+.cf-toast-close { border: 0; background: transparent; color: inherit; opacity: 0.7; padding: 0 4px; flex: none; }
+.cf-toast-close:hover { opacity: 1; }
+@keyframes cf-toast-in { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* ==========================================================================
+   響應式
+   ========================================================================== */
+@media (max-width: 1199.98px) {
+  .cf-category-list { grid-template-columns: minmax(0, 1fr); }
+  .cf-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 991.98px) {
+  .cf-settings-grid { grid-template-columns: minmax(0, 1fr); }
+  .cf-toast-region { right: 16px; left: 16px; bottom: 92px; width: auto; }
+}
+
+@media (max-width: 575.98px) {
+  .cf-page-head-title { font-size: 1.2rem; }
+  .cf-panel { padding: 18px 16px; border-radius: 18px; }
+  .cf-kv-list > div { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .cf-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .cf-stat-tile { padding: 12px; column-gap: 10px; }
+  .cf-stat-tile-icon { width: 34px; height: 34px; }
+  .cf-category-children { padding-left: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

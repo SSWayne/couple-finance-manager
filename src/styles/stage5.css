@@ -1,0 +1,117 @@
+/* ==========================================================================
+   第 5 階段：儲蓄目標、固定收支、財務報表
+   命名：cf-goal-*、cf-contrib-*、cf-icon-pick*、cf-recurring-*、cf-reports-*，全域唯一
+   ========================================================================== */
+
+/* ---------- 儲蓄目標 ---------- */
+.cf-savings-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.cf-goal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 14px; }
+.cf-goal-card {
+  border: 1px solid var(--cf-line);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.cf-goal-card-inactive { background: var(--cf-content-bg); opacity: 0.75; }
+.cf-goal-card-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cf-goal-card-icon { width: 42px; height: 42px; border-radius: 12px; flex: none; background: var(--cf-warning-soft); display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+.cf-goal-card-titles { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cf-goal-card-name { font-size: 0.98rem; font-weight: 500; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-goal-card-amounts { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px; }
+.cf-goal-card-saved { font-size: 1.45rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cf-goal-card .cf-progress { height: 14px; border-radius: 6px; }
+.cf-goal-card .cf-progress-fill { border-radius: 6px; }
+.cf-goal-card-actions { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: auto; }
+.cf-goal-card-actions .btn { padding: 5px 12px; font-size: 0.8rem; }
+.cf-goal-card-actions .btn + .cf-icon-btn { margin-left: auto; }
+
+.cf-icon-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.cf-icon-pick { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--cf-line); background: var(--cf-card-bg); display: inline-flex; align-items: center; justify-content: center; font-size: 1.05rem; color: var(--cf-text); }
+.cf-icon-pick-active { border-color: var(--cf-black); box-shadow: inset 0 0 0 1px var(--cf-black); background: var(--cf-lime-soft); }
+
+.cf-contrib-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-height: 60vh; overflow-y: auto; }
+.cf-contrib-item { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--cf-bar-gray); }
+.cf-contrib-item:last-child { border-bottom: 0; }
+.cf-contrib-amount { font-weight: 600; font-variant-numeric: tabular-nums; color: #4d7a12; }
+.cf-contrib-out { color: #9a5f0c; }
+.cf-contrib-main { min-width: 0; display: flex; flex-direction: column; font-size: 0.85rem; overflow-wrap: anywhere; }
+
+/* ---------- 固定收支 ---------- */
+.cf-recurring-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 14px; }
+.cf-recurring-card {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.cf-recurring-card-paused { opacity: 0.7; }
+.cf-recurring-card-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cf-recurring-card-icon { width: 40px; height: 40px; border-radius: 12px; flex: none; display: inline-flex; align-items: center; justify-content: center; background: var(--cf-bar-gray); }
+.cf-recurring-card-icon-income { background: var(--cf-lime-soft); color: #4d7a12; }
+.cf-recurring-card-icon-expense { background: var(--cf-warning-soft); color: #9a5f0c; }
+.cf-recurring-card-titles { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cf-recurring-card-titles .cf-help-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-recurring-card-name { font-size: 0.98rem; font-weight: 500; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-recurring-card-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cf-recurring-card-meta { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 12px; }
+.cf-recurring-card-meta dt { font-size: 0.7rem; font-weight: 400; color: var(--cf-text-muted); }
+.cf-recurring-card-meta dd { margin: 0; font-size: 0.84rem; overflow-wrap: anywhere; }
+.cf-recurring-card-actions { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.cf-recurring-card-actions .cf-pill { margin-right: auto; }
+.cf-recurring-card-actions .btn { padding: 5px 12px; font-size: 0.8rem; }
+
+/* ---------- 財務報表 ---------- */
+.cf-reports-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; align-items: start; }
+.cf-reports-layout > * { min-width: 0; }
+.cf-reports-nav { background: var(--cf-card-bg); border-radius: var(--cf-radius-card); padding: 10px; position: sticky; top: 20px; }
+.cf-reports-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.cf-reports-nav-btn { width: 100%; text-align: left; border: 0; background: transparent; border-radius: 12px; padding: 8px 12px; display: flex; flex-direction: column; color: var(--cf-text); }
+.cf-reports-nav-btn:hover { background: var(--cf-content-bg); }
+.cf-reports-nav-btn-active { background: var(--cf-bar-gray); }
+.cf-reports-nav-label { font-size: 0.88rem; font-weight: 500; }
+.cf-reports-nav-desc { font-size: 0.7rem; color: var(--cf-text-muted); }
+.cf-reports-main { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.cf-reports-filter-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; align-items: end; }
+.cf-reports-filter-grid > * { min-width: 0; }
+.cf-reports-filter .form-label { font-size: 0.75rem; color: var(--cf-text-muted); margin-bottom: 4px; }
+.cf-reports-filter .form-control, .cf-reports-filter .form-select { padding: 8px 10px; font-size: 0.88rem; }
+.cf-reports-mobile-select { display: none; }
+.cf-reports-summary { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.cf-reports-summary .cf-wedding-stat { background: var(--cf-content-bg); }
+.cf-table .cf-table-left { text-align: left; }
+/* 報表：金額欄一律靠右、文字欄靠左（覆蓋攤還表「前兩欄靠左」的規則） */
+.cf-table.cf-reports-table th, .cf-table.cf-reports-table td { text-align: right; }
+.cf-table.cf-reports-table .cf-table-left { text-align: left; }
+.cf-reports-table tfoot td { font-weight: 600; border-top: 2px solid var(--cf-line); background: var(--cf-content-bg); }
+.cf-reports-bar-col { width: 22%; min-width: 90px; }
+.cf-reports-bar {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--cf-lime);
+  background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0 3px, transparent 3px 7px);
+  min-width: 2px;
+}
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 1199.98px) {
+  .cf-reports-layout { grid-template-columns: minmax(0, 1fr); }
+  .cf-reports-nav { display: none; }
+  .cf-reports-mobile-select { display: block; }
+  .cf-reports-filter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cf-reports-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767.98px) {
+  .cf-savings-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-reports-filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-reports-mobile-select { grid-column: 1 / -1; }
+  .cf-reports-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-contrib-item { grid-template-columns: 90px minmax(0, 1fr) auto; }
+}

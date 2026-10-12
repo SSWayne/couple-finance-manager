@@ -1,0 +1,281 @@
+/* ==========================================================================
+   第 2 階段頁面：表單、收支記帳、帳戶管理、雙人財務
+   命名：cf-<元件>-<部位>，全域唯一
+   ========================================================================== */
+
+/* ---------- 共用：金額顏色、空狀態 ---------- */
+.cf-amount-income { color: #4d7a12; }
+.cf-amount-expense { color: var(--cf-text); }
+.cf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 32px 12px;
+  color: var(--cf-text-muted);
+  text-align: center;
+}
+.cf-empty .bi { font-size: 1.8rem; }
+.cf-empty p { margin: 0; }
+.cf-empty-hint {
+  background: var(--cf-warning-soft);
+  border-radius: var(--cf-radius-md);
+  padding: 12px 14px;
+  font-size: 0.88rem;
+}
+
+/* ---------- 表單 ---------- */
+.cf-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+.cf-form-grid > * { min-width: 0; }
+.cf-form-stack { display: flex; flex-direction: column; gap: 14px; }
+.cf-field { min-width: 0; display: flex; flex-direction: column; }
+.cf-field[hidden] { display: none; }
+.cf-field-wide { grid-column: 1 / -1; }
+.cf-field-error { color: #b13b3b; font-size: 0.8rem; margin-top: 4px; }
+.cf-field-error[hidden] { display: none; }
+.form-control.is-invalid, .form-select.is-invalid { border-color: var(--cf-error); }
+.cf-money-input { font-variant-numeric: tabular-nums; }
+.cf-field .cf-segmented { align-self: flex-start; }
+.cf-segmented-btn:disabled { opacity: 0.5; }
+
+.cf-txform { display: flex; flex-direction: column; gap: 16px; }
+.cf-txform-type .cf-segmented { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cf-txform-type .cf-segmented-btn { padding: 8px 0; font-size: 0.9rem; }
+
+.cf-split-box {
+  background: var(--cf-content-bg);
+  border-radius: var(--cf-radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cf-split-box[hidden], .cf-split-inputs[hidden] { display: none; }
+.cf-split-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cf-split-input { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; font-size: 0.85rem; margin: 0; }
+.cf-split-input > span:first-child { white-space: nowrap; max-width: 6em; overflow: hidden; text-overflow: ellipsis; }
+.cf-split-unit { color: var(--cf-text-muted); }
+.cf-split-preview { font-size: 0.85rem; display: flex; flex-direction: column; gap: 4px; }
+.cf-split-preview:empty { display: none; }
+.cf-split-preview-advance { color: #7a5410; }
+.cf-split-preview-error { color: #b13b3b; }
+
+/* ---------- 收支記帳：篩選 ---------- */
+.cf-txfilter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+.cf-txfilter-grid > * { min-width: 0; }
+.cf-txfilter-reset { padding: 5px 12px; font-size: 0.8rem; white-space: nowrap; }
+.cf-txfilter .cf-panel-head { margin-bottom: -4px; }
+.cf-txfilter .form-label { font-size: 0.75rem; color: var(--cf-text-muted); margin-bottom: 4px; }
+.cf-txfilter .form-control, .cf-txfilter .form-select { padding: 8px 10px; font-size: 0.88rem; }
+
+/* ---------- 收支記帳：清單 ---------- */
+.cf-txlist-summary { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; font-size: 0.85rem; color: var(--cf-text-muted); }
+.cf-txlist-summary strong { color: var(--cf-text); font-weight: 600; }
+.cf-txlist-summary .cf-amount-income { color: #4d7a12; }
+.cf-txlist-count { color: var(--cf-text); font-weight: 500; }
+.cf-txlist-note { margin-left: auto; font-size: 0.75rem; }
+
+.cf-txrow-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cf-txrow {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--cf-bar-gray);
+  min-width: 0;
+}
+.cf-txrow:last-child { border-bottom: 0; }
+.cf-txrow-compact { grid-template-columns: 36px minmax(0, 1fr) auto; }
+.cf-txrow-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--cf-swatch, var(--cf-bar-gray));
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--cf-black); font-size: 1rem;
+}
+.cf-txrow-compact .cf-txrow-icon { width: 36px; height: 36px; border-radius: 10px; }
+.cf-txrow-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+.cf-txrow-main:focus-visible { outline: 2px solid var(--cf-lime); outline-offset: 2px; border-radius: 6px; }
+.cf-txrow-title { font-weight: 500; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-txrow-meta { font-size: 0.75rem; color: var(--cf-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-txrow-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+.cf-txrow-badges .cf-pill { font-size: 0.7rem; padding: 1px 8px; font-weight: 500; }
+.cf-txrow-tag { font-size: 0.7rem; color: var(--cf-text-muted); }
+.cf-txrow-amount { font-weight: 600; font-size: 0.95rem; white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+.cf-txrow-actions { display: inline-flex; }
+
+.cf-pager { display: flex; align-items: center; justify-content: center; gap: 12px; padding-top: 12px; flex-wrap: wrap; }
+.cf-pager-status { font-size: 0.85rem; color: var(--cf-text-muted); }
+
+/* ---------- 帳戶管理 ---------- */
+.cf-networth-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.cf-networth-card {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+.cf-networth-card-icon {
+  grid-row: span 3;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: var(--cf-content-bg);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cf-networth-card-main .cf-networth-card-icon { background: var(--cf-lime); }
+.cf-networth-card-label { font-size: 0.78rem; color: var(--cf-text-muted); }
+.cf-networth-card-value { font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cf-networth-card-main .cf-networth-card-value { font-size: 1.9rem; }
+.cf-networth-card-note { font-size: 0.72rem; color: var(--cf-text-muted); }
+
+.cf-accounts-toggle { margin: 0; }
+.cf-account-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; }
+.cf-account-card {
+  border: 1px solid var(--cf-line);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.cf-account-card-credit { background: linear-gradient(135deg, #fff 60%, var(--cf-lime-soft)); }
+.cf-account-card-archived { opacity: 0.6; background: var(--cf-content-bg); }
+.cf-account-card-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cf-account-card-icon {
+  width: 38px; height: 38px; border-radius: 12px; flex: none;
+  background: var(--cf-lime-soft);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cf-account-card-titles { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.cf-account-card-name { font-size: 0.95rem; font-weight: 500; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-account-card-type { font-size: 0.75rem; color: var(--cf-text-muted); }
+.cf-account-card-balance { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.cf-account-card-amount { font-size: 1.45rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cf-account-card-debt { font-size: 0.75rem; color: #9a5f0c; }
+.cf-account-card-meta { font-size: 0.75rem; color: var(--cf-text-muted); }
+.cf-account-card-note { font-size: 0.8rem; margin: 0; color: var(--cf-text-muted); overflow-wrap: anywhere; }
+.cf-account-card-actions { display: flex; align-items: center; gap: 2px; margin-top: auto; padding-top: 4px; }
+.cf-account-card-actions .btn { padding: 5px 12px; font-size: 0.8rem; margin-right: auto; }
+
+/* ---------- 雙人財務 ---------- */
+.cf-month-input { width: auto; min-width: 170px; }
+.cf-couple-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.cf-couple-grid > * { min-width: 0; }
+.cf-couple-member, .cf-couple-household {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cf-couple-member-head { display: flex; align-items: center; gap: 12px; }
+.cf-couple-member-name { font-size: 1rem; font-weight: 500; margin: 0; }
+.cf-couple-member-stats { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cf-couple-stat { background: var(--cf-content-bg); border-radius: 12px; padding: 10px 12px; min-width: 0; }
+.cf-couple-stat dt { font-size: 0.75rem; font-weight: 400; color: var(--cf-text-muted); }
+.cf-couple-stat dd { margin: 0; font-size: 1.05rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cf-couple-stat-hint { font-size: 0.68rem; color: var(--cf-text-muted); }
+.cf-couple-household { background: var(--cf-black); color: #fff; }
+.cf-couple-household-label { font-size: 0.8rem; opacity: 0.75; }
+.cf-couple-household-value { font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--cf-lime); overflow-wrap: anywhere; }
+.cf-couple-household .cf-kv-list dt, .cf-couple-household .cf-help-text { color: rgba(255, 255, 255, 0.65); }
+.cf-couple-household .cf-kv-list > div { grid-template-columns: minmax(0, 1fr) auto; }
+
+.cf-advance-headline { font-size: 1.05rem; margin: 0; display: flex; flex-wrap: wrap; gap: 4px; align-items: baseline; }
+.cf-advance-amount { font-size: 1.6rem; font-weight: 600; background: var(--cf-lime-soft); padding: 0 8px; border-radius: 8px; }
+.cf-advance-split { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.85rem; color: var(--cf-text-muted); }
+.cf-advance-split strong { color: var(--cf-text); }
+.cf-advance-list { list-style: none; margin: 0; padding: 0; }
+.cf-advance-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--cf-bar-gray);
+  font-size: 0.85rem;
+}
+.cf-advance-item:last-child { border-bottom: 0; }
+.cf-advance-item-date { color: var(--cf-text-muted); font-variant-numeric: tabular-nums; }
+.cf-advance-item-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-advance-item-dir { color: var(--cf-text-muted); white-space: nowrap; font-size: 0.78rem; }
+.cf-advance-item-amount { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.cf-settle-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cf-settle-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+  align-items: center;
+  background: var(--cf-content-bg);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+.cf-settle-item-main { min-width: 0; display: flex; flex-direction: column; }
+.cf-settle-item-title { font-weight: 500; }
+.cf-settle-preview p { margin: 0; }
+.cf-settle-transfer { display: flex; gap: 10px; align-items: flex-start; padding-left: 0; }
+.cf-settle-transfer[hidden] { display: none; }
+.cf-settle-transfer .form-check-input { float: none; margin: 3px 0 0; flex: none; }
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 1199.98px) {
+  .cf-txfilter-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cf-txfilter-search { grid-column: 1 / -1; }
+  .cf-couple-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-couple-household { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767.98px) {
+  .cf-form-grid { grid-template-columns: minmax(0, 1fr); }
+  .cf-networth-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-networth-card-main { grid-column: 1 / -1; }
+  .cf-couple-grid { grid-template-columns: minmax(0, 1fr); }
+  .cf-settle-item { grid-template-columns: minmax(0, 1fr) auto; }
+  .cf-settle-item .cf-pill { grid-column: 1 / -1; grid-row: 2; justify-self: start; }
+}
+
+@media (max-width: 575.98px) {
+  .cf-txfilter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cf-txrow { grid-template-columns: 36px minmax(0, 1fr) auto; gap: 10px; }
+  .cf-txrow-icon { width: 36px; height: 36px; border-radius: 10px; }
+  /* 手機：點整列開啟修改（表單內有刪除），不另外顯示圖示按鈕 */
+  .cf-txrow-actions { display: none; }
+  .cf-txlist-note { margin-left: 0; width: 100%; }
+  .cf-split-inputs { grid-template-columns: minmax(0, 1fr); }
+  .cf-couple-member-stats { gap: 8px; }
+  .cf-advance-item { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .cf-advance-item-dir { grid-column: 2; grid-row: 2; }
+  .cf-advance-item-amount { grid-row: 1 / span 2; grid-column: 3; }
+  .cf-networth-card { padding: 14px; }
+  .cf-networth-card-value { font-size: 1.2rem; }
+  .cf-networth-card-main .cf-networth-card-value { font-size: 1.6rem; }
+  .cf-page-head-actions { width: 100%; }
+  .cf-page-head-actions .btn { flex: 1; }
+}
+
+/* 對話框：刪除按鈕靠左 */
+.cf-btn-danger-ghost { background: var(--cf-card-bg); color: #b13b3b; border: 1px solid var(--cf-error-soft); }
+.cf-btn-danger-ghost:hover, .cf-btn-danger-ghost:focus-visible { background: var(--cf-error-soft); color: #b13b3b; border-color: var(--cf-error-soft); }
+.cf-dialog-action-start { margin-right: auto; }

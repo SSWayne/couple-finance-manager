@@ -1,0 +1,308 @@
+/* ==========================================================================
+   財務總覽（依參考圖）與預算管理
+   命名：cf-dash-*、cf-budget-*、cf-progress*，全域唯一
+   Grid 欄位一律 minmax(0, 1fr)，子項 min-width: 0，避免橫向捲動區撐寬欄位
+   ========================================================================== */
+
+.cf-visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.cf-dash-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+.cf-dash-left, .cf-dash-right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.cf-dash-row { display: grid; gap: 16px; align-items: stretch; }
+.cf-dash-row > * { min-width: 0; }
+.cf-dash-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cf-dash-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.cf-dash-card {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.cf-dash-card p { margin: 0; }
+.cf-dash-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; min-width: 0; }
+.cf-dash-card-titles { min-width: 0; display: flex; flex-direction: column; }
+.cf-dash-card-title { font-size: 1rem; font-weight: 500; margin: 0; white-space: nowrap; }
+.cf-dash-card-subtitle { font-size: 0.74rem; color: var(--cf-text-muted); }
+.cf-dash-big { font-size: 1.75rem; font-weight: 500; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; line-height: 1.15; overflow-wrap: anywhere; }
+.cf-dash-negative { color: #b13b3b; }
+.cf-dash-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; color: var(--cf-text-muted); font-size: 0.85rem; padding: 6px 0; }
+.cf-dash-empty .bi { font-size: 1.4rem; color: var(--cf-lime-dark); }
+.cf-dash-footnote { font-size: 0.74rem; color: var(--cf-text-muted); }
+.cf-dash-spending .cf-dash-period { max-width: 104px; }
+.cf-dash-period { width: auto; padding: 4px 30px 4px 10px; font-size: 0.78rem; border-radius: 10px; background-position: right 8px center; }
+.cf-dash-small-btn { padding: 4px 10px; font-size: 0.76rem; border-radius: 10px; white-space: nowrap; }
+
+/* ---------- 主卡片 ---------- */
+.cf-dash-main { display: grid; grid-template-columns: minmax(0, 1fr) 220px; padding: 0; gap: 0; overflow: hidden; }
+.cf-dash-main-chartside { padding: 20px 20px 14px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.cf-dash-main-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.cf-dash-networth { display: flex; flex-direction: column; min-width: 0; }
+.cf-dash-networth-value { font-size: 2.25rem; font-weight: 500; line-height: 1.1; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cf-dash-networth-label { font-size: 0.74rem; color: var(--cf-text-muted); margin-top: 2px; }
+.cf-dash-main-tools { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cf-dash-legend { display: flex; gap: 12px; font-size: 0.76rem; }
+.cf-dash-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.cf-dash-dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.cf-dash-dot-income { background: var(--cf-lime); }
+.cf-dash-dot-expense { background: var(--cf-orange); }
+.cf-dash-dot-net { background: var(--cf-yellow); }
+.cf-dash-focus { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 0.76rem; color: var(--cf-text-muted); min-height: 1.2em; }
+.cf-dash-focus span { display: inline-flex; align-items: center; gap: 5px; }
+.cf-dash-focus strong { color: var(--cf-text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.cf-dash-focus-title { color: var(--cf-text); font-weight: 500; }
+.cf-dash-chart { position: relative; height: 260px; min-width: 0; }
+.cf-dash-chart canvas { display: block; }
+.cf-dash-chart-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--cf-text-muted); background: var(--cf-content-bg); border-radius: 14px; }
+.cf-dash-chart-empty .bi { font-size: 1.6rem; }
+
+.cf-dash-stats { border-left: 1px solid var(--cf-bar-gray); padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-around; gap: 18px; min-width: 0; }
+.cf-dash-stat { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cf-dash-stat-label { font-size: 0.76rem; color: var(--cf-text-muted); }
+.cf-dash-stat-value { font-size: 1.6rem; font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.2; overflow-wrap: anywhere; }
+.cf-dash-change { font-size: 0.72rem; display: inline-flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+.cf-dash-change-good { color: #5f8f1c; }
+.cf-dash-change-bad { color: #c0782a; }
+.cf-dash-change-none { color: var(--cf-text-muted); }
+.cf-dash-change-note { color: var(--cf-text-muted); }
+
+/* ---------- 斜線進度條 ---------- */
+.cf-progress { position: relative; height: 24px; border-radius: 8px; background: var(--cf-bar-gray); overflow: hidden; }
+.cf-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: 8px;
+  background-color: var(--cf-lime);
+  background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0 4px, transparent 4px 9px);
+  min-width: 4px;
+  transition: width 0.3s ease;
+}
+.cf-progress-warning .cf-progress-fill { background-color: var(--cf-warning); }
+.cf-progress-over .cf-progress-fill { background-color: var(--cf-error); }
+.cf-progress-goal .cf-progress-fill { background-color: var(--cf-orange); }
+
+/* ---------- 本月預算 ---------- */
+.cf-dash-budget-main { display: flex; flex-direction: column; gap: 6px; }
+.cf-dash-budget-main-head { display: flex; justify-content: space-between; gap: 8px; font-size: 0.85rem; flex-wrap: wrap; }
+.cf-dash-budget-scale { display: flex; justify-content: space-between; font-size: 0.74rem; color: var(--cf-text-muted); font-variant-numeric: tabular-nums; }
+.cf-dash-budget-level { font-size: 0.74rem; color: var(--cf-text-muted); white-space: nowrap; }
+.cf-dash-budget-level-warning { color: #9a5f0c; }
+.cf-dash-budget-level-over { color: #b13b3b; font-weight: 600; }
+.cf-dash-budget-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cf-dash-budget-list .cf-progress { height: 8px; border-radius: 5px; }
+.cf-dash-budget-list .cf-progress-fill { border-radius: 5px; background-image: none; }
+.cf-dash-budget-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; margin-bottom: 4px; min-width: 0; }
+.cf-dash-budget-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- 財務提醒 ---------- */
+.cf-dash-reminder-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.cf-dash-reminder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--cf-content-bg);
+  color: var(--cf-text);
+  text-decoration: none;
+  text-align: left;
+  font-size: 0.82rem;
+}
+.cf-dash-reminder:hover { color: var(--cf-text); background: var(--cf-bar-gray); }
+.cf-dash-reminder-icon { width: 30px; height: 30px; border-radius: 50%; flex: none; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+.cf-dash-reminder-danger { background: var(--cf-error-soft); color: #b13b3b; }
+.cf-dash-reminder-warning { background: var(--cf-warning-soft); color: #9a5f0c; }
+.cf-dash-reminder-info { background: var(--cf-lime-soft); color: #4d7a12; }
+.cf-dash-reminder-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.cf-dash-reminder-go { color: var(--cf-text-muted); font-size: 0.75rem; flex: none; }
+
+/* ---------- 支出分析 ---------- */
+.cf-dash-segbar { display: flex; gap: 4px; height: 28px; min-width: 0; }
+.cf-dash-seg {
+  min-width: 6px;
+  border-radius: 6px;
+  background-color: var(--cf-swatch, var(--cf-lime));
+  background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0 3px, transparent 3px 8px);
+}
+.cf-dash-seg-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.cf-dash-seg-item {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cf-text);
+  font-size: 0.8rem;
+  text-align: left;
+}
+.cf-dash-seg-item:hover { background: var(--cf-content-bg); }
+.cf-dash-seg-swatch { width: 10px; height: 10px; border-radius: 3px; background: var(--cf-swatch); }
+.cf-dash-seg-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-dash-seg-pct { color: var(--cf-text-muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- 財務健康 ---------- */
+.cf-dash-gauge { position: relative; width: 100%; max-width: 250px; margin: 4px auto 0; }
+.cf-dash-gauge-svg { display: block; width: 100%; height: auto; }
+.cf-dash-gauge-label { position: absolute; left: 0; right: 0; bottom: 2px; display: flex; flex-direction: column; align-items: center; }
+.cf-dash-gauge-label strong { font-size: 1.6rem; font-weight: 500; line-height: 1.1; }
+.cf-dash-gauge-label span { font-size: 0.72rem; color: var(--cf-text-muted); }
+
+/* ---------- 儲蓄目標 ---------- */
+.cf-dash-goal-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.cf-dash-goal { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 10px; align-items: start; }
+.cf-dash-goal-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--cf-content-bg); display: inline-flex; align-items: center; justify-content: center; font-size: 1.05rem; }
+.cf-dash-goal-body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.cf-dash-goal-row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.8rem; min-width: 0; }
+.cf-dash-goal-name { font-weight: 500; font-size: 0.82rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-dash-goal-amount { font-variant-numeric: tabular-nums; font-size: 0.74rem; color: var(--cf-text-muted); overflow-wrap: anywhere; }
+.cf-dash-goal .cf-progress { height: 12px; border-radius: 5px; }
+.cf-dash-goal .cf-progress-fill { border-radius: 5px; }
+.cf-dash-goal-note { font-size: 0.7rem; color: var(--cf-text-muted); }
+
+/* ---------- 右欄：帳戶卡片 ---------- */
+.cf-dash-acc-scroller {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+  margin: 0 -4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 0;
+  scrollbar-width: thin;
+}
+.cf-dash-acc-scroller:focus-visible { outline: 2px solid var(--cf-lime); outline-offset: 2px; border-radius: 12px; }
+.cf-dash-acc {
+  flex: 0 0 200px;
+  height: 122px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--cf-text);
+  min-width: 0;
+}
+.cf-dash-acc:hover { color: var(--cf-text); filter: brightness(0.98); }
+.cf-dash-acc-primary { background: var(--cf-lime); background-image: radial-gradient(circle at 110% -20%, rgba(255, 255, 255, 0.35) 0 40%, transparent 41%); }
+.cf-dash-acc-secondary { background: var(--cf-bar-gray); }
+.cf-dash-acc-plain { background: var(--cf-card-bg); border: 1px solid var(--cf-line); }
+.cf-dash-acc-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; }
+.cf-dash-acc-top .bi { font-size: 1.05rem; }
+.cf-dash-acc-balance { font-size: 1.3rem; font-weight: 600; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-dash-acc-bottom { display: flex; justify-content: space-between; gap: 6px; font-size: 0.72rem; min-width: 0; }
+.cf-dash-acc-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cf-dash-quick { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.cf-dash-quick-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--cf-text); padding: 0; min-width: 0; }
+.cf-dash-quick-icon {
+  width: 46px; height: 46px; border-radius: 12px;
+  border: 1px solid var(--cf-line);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 1.05rem;
+  transition: background 0.15s;
+}
+.cf-dash-quick-btn:hover .cf-dash-quick-icon { background: var(--cf-lime-soft); border-color: var(--cf-lime); }
+.cf-dash-quick-btn:focus-visible .cf-dash-quick-icon { outline: 2px solid var(--cf-lime); }
+.cf-dash-quick-label { font-size: 0.72rem; white-space: nowrap; }
+
+/* ---------- 代墊狀況 ---------- */
+.cf-dash-advance-body { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cf-dash-advance-pair { display: inline-flex; align-items: center; gap: 6px; color: var(--cf-text-muted); }
+.cf-dash-advance-pair .cf-avatar { width: 32px; height: 32px; font-size: 0.8rem; }
+.cf-dash-advance-text { display: flex; flex-direction: column; flex: 1; min-width: 0; font-size: 0.76rem; color: var(--cf-text-muted); }
+.cf-dash-advance-text strong { font-size: 1.15rem; color: var(--cf-text); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---------- 最近交易 ---------- */
+.cf-dash-recent .cf-txrow { padding: 8px 0; border-bottom-color: var(--cf-content-bg); }
+.cf-dash-recent .cf-txrow-title { font-size: 0.82rem; }
+.cf-dash-recent .cf-txrow-amount { font-size: 0.85rem; }
+
+/* ==========================================================================
+   預算管理
+   ========================================================================== */
+.cf-budget-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+.cf-budget-card {
+  background: var(--cf-card-bg);
+  border-radius: var(--cf-radius-card);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid transparent;
+}
+.cf-budget-card-over { border-color: var(--cf-error-soft); }
+.cf-budget-card-head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.cf-budget-card-icon {
+  width: 38px; height: 38px; border-radius: 12px; flex: none;
+  background: var(--cf-swatch, var(--cf-lime-soft));
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cf-budget-card-titles { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cf-budget-card-title { font-size: 0.95rem; font-weight: 500; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cf-budget-card-scope { font-size: 0.72rem; color: var(--cf-text-muted); }
+.cf-budget-card-nums { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cf-budget-card-nums dt { font-size: 0.7rem; font-weight: 400; color: var(--cf-text-muted); }
+.cf-budget-card-nums dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.cf-budget-card-over { color: #b13b3b; }
+.cf-budget-card-note { margin: 0; font-size: 0.8rem; color: var(--cf-text-muted); overflow-wrap: anywhere; }
+.cf-budget-card-actions { display: flex; align-items: center; gap: 2px; }
+.cf-budget-card-actions .btn { padding: 5px 12px; font-size: 0.8rem; margin-right: auto; }
+dd.cf-budget-card-over { color: #b13b3b; }
+
+/* ==========================================================================
+   響應式
+   ========================================================================== */
+@media (max-width: 1439.98px) {
+  .cf-dash-grid { grid-template-columns: minmax(0, 1fr) 310px; }
+  .cf-dash-main { grid-template-columns: minmax(0, 1fr) 190px; }
+  .cf-dash-stat-value { font-size: 1.35rem; }
+}
+
+@media (max-width: 1199.98px) {
+  .cf-dash-grid { grid-template-columns: minmax(0, 1fr); }
+  .cf-dash-right { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .cf-dash-right > * { min-width: 0; }
+  .cf-dash-recent { grid-column: 1 / -1; }
+  .cf-dash-row-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cf-dash-goals { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767.98px) {
+  .cf-dash-main { grid-template-columns: minmax(0, 1fr); }
+  .cf-dash-stats { border-left: 0; border-top: 1px solid var(--cf-bar-gray); flex-direction: row; justify-content: space-between; padding: 14px 18px 18px; gap: 10px; }
+  .cf-dash-stat { flex: 1; }
+  .cf-dash-row-2, .cf-dash-row-3, .cf-dash-right { grid-template-columns: minmax(0, 1fr); }
+  .cf-dash-chart { height: 220px; }
+}
+
+@media (max-width: 575.98px) {
+  .cf-dash-card { padding: 16px; }
+  .cf-dash-main-chartside { padding: 16px 14px 10px; }
+  .cf-dash-networth-value { font-size: 1.85rem; }
+  .cf-dash-stats { flex-direction: column; gap: 12px; }
+  .cf-dash-stat { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px; align-items: baseline; }
+  .cf-dash-stat-value { font-size: 1.15rem; text-align: right; }
+  .cf-dash-change { grid-column: 1 / -1; }
+  .cf-dash-legend { gap: 8px; }
+  .cf-dash-acc { flex-basis: 180px; }
+  .cf-budget-card-nums { gap: 4px; }
+}
